@@ -4,11 +4,9 @@ import React, { Suspense, lazy, useState } from "react";
 // import RightSideBar from "./components/RightSideBar/RightSideBar.jsx";
 // import InboxMails from "./components/InboxMails.jsx";
 import {
-  BrowserRouter,
   Navigate,
   Route,
   RouterProvider,
-  Routes,
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
@@ -19,7 +17,7 @@ const ErrorComponent = lazy(() =>
 );
 import SuspenseLoader from "./components/Common/SuspenseLoader.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
-// const Dashboard = lazy(() => import("./pages/MainPages.jsx"));
+// const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -49,10 +47,6 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  // const [openDrawer, setOpenDrawer] = useState(false);
-  // const toggleDrawer = () => {
-  //   setOpenDrawer((prevState) => !prevState);
-  // };
   return (
     <>
       <Suspense fallback={<SuspenseLoader />}>

@@ -1,13 +1,20 @@
 import {
   AccessTimeOutlined,
+  AccountCircle,
+  AccountCircleOutlined,
   DeleteOutline,
-  Scale,
   StarBorderOutlined,
   StarRate,
-  StarRateRounded,
-  StarRounded,
 } from "@mui/icons-material";
-import { Box, Checkbox, IconButton, Paper, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Checkbox,
+  IconButton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -16,7 +23,6 @@ import ViewEmail from "./ViewEmail";
 import useApi from "../hooks/useApi";
 import { API_URLS } from "../services/api.urls";
 const Wrapper = styled(Box)({
-  margin: "0px",
   padding: "0 0 0 11px",
   background: "#f2f6fc",
   display: "flex",
@@ -47,7 +53,7 @@ const Indicator = styled(Typography)({
 });
 const Date = styled(Typography)({
   marginLeft: "auto",
-  marginRight: "20px",
+  paddingRight: "20px",
   fontSize: "12px ",
   color: "#5F6368",
 });
@@ -57,6 +63,7 @@ const Email = ({
   setSelectedEmails,
   setRefreshScreen,
   setChecked,
+  checked,
 }) => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
@@ -64,15 +71,18 @@ const Email = ({
   const toggleStarredService = useApi(API_URLS.toggleStarredEmail);
   const toggleSnoozedService = useApi(API_URLS.toggleSnoozedEmail);
   const moveEmailsToTrashService = useApi(API_URLS.moveEmailsToTrash);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   // const deleteEmailService = useApi(API_URLS.deleteEmailPermanently);
   const toggleStarredMail = () => {
     toggleStarredService.call({ id: email._id, value: !email.starred });
-    setRefreshScreen((prevState) => !prevState);
   };
   const toggleSnoozedEmail = (e) => {
     e.stopPropagation();
     toggleSnoozedService.call({ id: email._id, value: !email.snooze });
-    setRefreshScreen((prevState) => !prevState);
+    setTimeout(() => {
+      setRefreshScreen((prevState) => !prevState);
+    }, 500);
   };
   const onValueChange = () => {
     if (selectedEmails.includes(email._id)) {
@@ -88,7 +98,10 @@ const Email = ({
   const deleteSelectedEmails = (e) => {
     e.stopPropagation();
     moveEmailsToTrashService.call([email._id]);
-    setRefreshScreen((prevState) => !prevState);
+    setTimeout(() => {
+      setRefreshScreen((prevState) => !prevState);
+    }, 500);
+    setChecked(false);
   };
   return (
     <>
@@ -98,19 +111,42 @@ const Email = ({
       >
         <Checkbox
           size="small"
-          checked={selectedEmails.includes(email._id)}
+          checked={checked ? selectedEmails.includes(email._id) : false}
           onChange={onValueChange}
+          sx={{ display: { xs: "none", sm: "flex" } }}
         />
+        {isSmallScreen && (
+          <AccountCircle
+            color="action"
+            fontSize="large"
+            alt={email.name}
+            sx={{
+              width: "30px",
+              height: "30px",
+              marginRight: "0px",
+            }}
+          >
+            {email.name.charAt(0)}
+          </AccountCircle>
+        )}
+
         {type !== "trash" &&
           (email.starred ? (
             <IconButton
-              sx={{ marginLeft: "8px", color: "#FFF200" }}
+              sx={{
+                marginLeft: "8px",
+                color: "#FFF200",
+                display: { xs: "none", sm: "flex" },
+              }}
               onClick={toggleStarredMail}
             >
               <StarRate fontSize="small" />
             </IconButton>
           ) : (
-            <IconButton sx={{ marginLeft: "8px" }} onClick={toggleStarredMail}>
+            <IconButton
+              sx={{ marginLeft: "8px", display: { xs: "none", sm: "flex" } }}
+              onClick={toggleStarredMail}
+            >
               <StarBorderOutlined fontSize="small" />
             </IconButton>
           ))}
@@ -122,12 +158,18 @@ const Email = ({
         >
           {/* <ViewEmail email={} /> */}
           <Typography
-            sx={{ width: "240px", overflow: "hidden", marginLeft: "12px" }}
+            sx={{
+              width: { xs: "100px", sm: "150px", md: "240px" },
+              overflow: "hidden",
+              marginLeft: "12px",
+            }}
           >
             {email.name}
           </Typography>
-          <Indicator>Inbox</Indicator>
-          <Typography>
+          <Indicator sx={{ display: { xs: "none", sm: "flex" } }}>
+            Inbox
+          </Indicator>
+          <Typography sx={{ marginLeft: "2px" }}>
             {email.subject}
             {email.body && "-"} {email.body}
           </Typography>

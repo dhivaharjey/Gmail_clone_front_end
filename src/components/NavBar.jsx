@@ -6,8 +6,6 @@ import {
   Typography,
   IconButton,
   InputBase,
-  Grid,
-  Avatar,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import Icon from "@mui/material/Icon";
@@ -114,8 +112,11 @@ export default function NavBar({ toggleDrawer }) {
                 }}
               />
             </Box>
-            <IconButton sx={{ display: { xs: "none", sm: "flex" } }}>
-              <Menu color="action" onClick={toggleDrawer} Toolbar="Main Menu" />
+            <IconButton
+              sx={{ display: { xs: "none", sm: "flex" } }}
+              onClick={toggleDrawer}
+            >
+              <Menu color="action" Toolbar="Main Menu" />
             </IconButton>
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
               <img

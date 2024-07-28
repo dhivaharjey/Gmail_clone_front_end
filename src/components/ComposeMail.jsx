@@ -31,9 +31,9 @@ import {
   useTheme,
 } from "@mui/material";
 
-import axios from "axios"; // Import Axios
 import useApi from "../hooks/useApi";
 import { API_URLS } from "../services/api.urls";
+import emailjs from "@emailjs/browser";
 
 const dialogStyle = (exitFullScreen) => ({
   height: exitFullScreen ? "90%" : "505px",
@@ -118,6 +118,7 @@ const ComposeMail = ({ openMsgBox, setOpenMsgBox }) => {
   const [isRecipientFocused, setRecipientFocused] = useState(false);
   const [data, setData] = useState({});
   const theme = useTheme();
+  const { form } = useRef();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [exitFullScreen, setExitFullScreen] = useState(isSmallScreen);
   const fileInputRef = useRef(null);
@@ -157,24 +158,49 @@ const ComposeMail = ({ openMsgBox, setOpenMsgBox }) => {
   const handleAttachFileClick = () => {
     fileInputRef.current.click();
   };
+  const onValueChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
 
   const sendMail = (e) => {
     e.preventDefault();
+    // if (data.to) {
+    //   Email.send({
+    //     // ...config,
+    //     Host: "smtp.elasticemail.com",
+    //     Port: 2525,
+    //     Username: process.env.REACT_APP_USERNAME,
+    //     // Password: "FD584DCBDD9F7DCC8D70B40948987E06EBBA",
+    //     Password: process.env.REACT_APP_PASSWORD,
+    //     To: data.to,
+    //     From: "updatenewversion07@gmail.com",
+    //     Subject: data.subject,
+    //     Body: data.body,
+    //   }).then((message) => alert(message));
+    // }
+    emailjs
+      .send(
+        "service_xrhrsrp",
+        "template_ru3crqo",
+        {
+          to: data.to,
+          from_name: "updatenewversion07@gmail.com",
+          subject: data.subject,
+          message: data.body,
+        },
+        "R-gMXpp7uprOB19r8" // Replace with your EmailJS user ID
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          alert("Email sent successfully!");
+        },
+        (error) => {
+          console.log(error.text);
+          alert("Failed to send email. Please try again.");
+        }
+      );
 
-    if (window.Email) {
-      Email.send({
-        // ...config,
-        Host: "smtp.elasticemail.com",
-        Port: 2525,
-        Username: process.env.REACT_APP_USERNAME,
-        // Password: "FD584DCBDD9F7DCC8D70B40948987E06EBBA",
-        Password: process.env.REACT_APP_PASSWORD,
-        To: data.to,
-        From: "updatenewversion07@gmail.com",
-        Subject: data.subject,
-        Body: data.body,
-      }).then((message) => alert(message));
-    }
     const payload = {
       to: data.to,
       from: "updatenewversion07@gmail.com",
@@ -197,9 +223,7 @@ const ComposeMail = ({ openMsgBox, setOpenMsgBox }) => {
     setExitFullScreen(isSmallScreen);
     setRefreshScreen(true);
   };
-  const onValueChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
+
   useEffect(() => {
     setExitFullScreen(isSmallScreen);
     setRefreshScreen(true);
@@ -302,7 +326,7 @@ const ComposeMail = ({ openMsgBox, setOpenMsgBox }) => {
       />
       <Footer>
         <Box sx={{ display: "flex" }}>
-          <SendButton onClick={(e) => sendMail(e)}>
+          <SendButton onClick={(e) => sendMail(e)} ref={form}>
             Send
             <ArrowDropUpOutlined
               sx={{

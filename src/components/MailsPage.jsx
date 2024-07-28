@@ -1,10 +1,11 @@
 import { Box, Checkbox, IconButton, List, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import useApi from "../hooks/useApi";
 import { API_URLS } from "../services/api.urls";
 import {
   ArchiveOutlined,
+  CreateOutlined,
   DeleteOutline,
   DeleteOutlineRounded,
   DraftsOutlined,
@@ -14,15 +15,17 @@ import {
   ReportGmailerrorredOutlined,
 } from "@mui/icons-material";
 import toast, { Toaster } from "react-hot-toast";
-import Email from "./Email";
+
 import NoMail from "./NoMail";
 import { EMPTY_TABS } from "./constants/emptyMessage";
-
+import InboxEmailLoader from "./Common/InboxEmailLoader";
+const EmailContent = lazy(() => import("./Email"));
 const MailsPage = () => {
   const [checked, setChecked] = useState(false);
   const [selectedEmails, setSelectedEmails] = useState([]);
   const [refreshScreen, setRefreshScreen] = useState(false);
-  const { openDrawer } = useOutletContext();
+  const { openDrawer, setOpenMsgBox } = useOutletContext();
+
   const { type } = useParams();
   const getEmailService = useApi(API_URLS.getEmailFromType);
   const moveEmailsToTrashService = useApi(API_URLS.moveEmailsToTrash);
@@ -40,7 +43,9 @@ const MailsPage = () => {
     }
   };
   const handlerefreshClick = () => {
-    setRefreshScreen((prevState) => !prevState);
+    setTimeout(() => {
+      setRefreshScreen((prevState) => !prevState);
+    }, 500);
     // toast.success("Loading....");
     toast("Loading....", {
       duration: 1000,
@@ -62,7 +67,10 @@ const MailsPage = () => {
       moveEmailsToTrashService.call(selectedEmails);
       setChecked(false);
     }
-    setRefreshScreen((prevState) => !prevState);
+    setTimeout(() => {
+      setRefreshScreen((prevState) => !prevState);
+    }, 500);
+    // setChecked(false);
   };
   useEffect(() => {
     getEmailService.call({}, type);
@@ -90,6 +98,7 @@ const MailsPage = () => {
             size="small"
             sx={{ margin: "0 8px 6px 8px" }}
             onChange={selectedAllEmails}
+            // checked={checked}
           />
 
           {checked && (
@@ -128,19 +137,22 @@ const MailsPage = () => {
             </Box>
           )}
         </Box>
-        <Box>
+        <Suspense fallback={<InboxEmailLoader />}>
           <List>
             {getEmailService?.response?.email?.map((email) => {
               return (
                 <>
-                  <Email
+                  {/* <Suspense fallback={<InboxEmailLoader />}> */}
+                  <EmailContent
                     key={email._id}
                     email={email}
                     selectedEmails={selectedEmails}
                     setSelectedEmails={setSelectedEmails}
                     setRefreshScreen={setRefreshScreen}
                     setChecked={setChecked}
+                    checked={checked}
                   />
+                  {/* </Suspense> */}
                 </>
               );
             })}
@@ -148,7 +160,40 @@ const MailsPage = () => {
           {getEmailService?.response?.email?.length === 0 && (
             <NoMail message={EMPTY_TABS[type]} />
           )}
-        </Box>
+        </Suspense>
+      </Box>
+      <Box
+        sx={{
+          display: { xs: "flex", sm: "none" },
+          fontFamily: "Jost",
+          position: "absolute",
+          bottom: "20px",
+          right: "20px",
+        }}
+      >
+        <IconButton
+          sx={{
+            display: "flex",
+            fontFamily: "Jost",
+            // position: "absolute",
+            // bottom: "20px",
+            // right: "200px",
+            width: "150px",
+            color: "black",
+            padding: "18px",
+            borderRadius: "15px",
+            backgroundColor: "#C2E7FF",
+            "&:hover": {
+              backgroundColor: "#C2E7FF",
+              boxShadow:
+                "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+            },
+          }}
+          onClick={() => setOpenMsgBox(true)}
+        >
+          <CreateOutlined sx={{ marginLeft: "-8.5px" }} />
+          <Typography sx={{ marginLeft: "12px" }}>Compose</Typography>
+        </IconButton>
       </Box>
     </>
   );

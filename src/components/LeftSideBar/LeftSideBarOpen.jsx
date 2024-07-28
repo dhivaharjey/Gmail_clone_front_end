@@ -107,6 +107,7 @@ const LeftSideBarOpen = ({ setOpenMsgBox }) => {
           })}
         </List>
       </Container>
+
       {/* <Box>
         <IconButton
           sx={{

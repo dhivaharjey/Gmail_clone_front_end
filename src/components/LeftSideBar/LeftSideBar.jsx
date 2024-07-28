@@ -4,8 +4,8 @@ import { Drawer } from "@mui/material";
 import LeftSideBarClosed from "./LeftSideBarClosed";
 import LeftSideBarOpen from "./LeftSideBarOpen";
 import ComposeMail from "../ComposeMail";
-const LeftSideBar = ({ openDrawer }) => {
-  const [openMsgBox, setOpenMsgBox] = useState(false);
+const LeftSideBar = ({ openDrawer, openMsgBox, setOpenMsgBox }) => {
+  // const [openMsgBox, setOpenMsgBox] = useState(false);
   return (
     <>
       {openDrawer ? (

@@ -1,17 +1,17 @@
 import { lazy } from "react";
-// import InboxMails from "../components/InboxMails.jsx";
+// import Mailspage from "../components/Mailspage.jsx";
 // import MainPages from "../pages/MainPages.jsx";
-const MainPages = lazy(() => import("../pages/Dashboard.jsx"));
-const InboxMails = lazy(() => import("../components/MailsPage.jsx"));
+const Dashboard = lazy(() => import("../pages/Dashboard.jsx"));
+const Mailspage = lazy(() => import("../components/MailsPage.jsx"));
 const ViewEmail = lazy(() => import("../components/ViewEmail.jsx"));
 const routes = {
   main: {
     path: "/",
-    element: MainPages,
+    element: Dashboard,
   },
   emails: {
     path: "/emails",
-    element: InboxMails,
+    element: Mailspage,
   },
 
   view: {
@@ -20,7 +20,7 @@ const routes = {
   },
   invalid: {
     path: "/*",
-    element: InboxMails,
+    element: Mailspage,
   },
 };
 export { routes };

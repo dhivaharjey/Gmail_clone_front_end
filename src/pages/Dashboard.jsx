@@ -1,15 +1,15 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, lazy, useState } from "react";
 import NavBar from "../components/NavBar";
 import LeftSideBar from "../components/LeftSideBar/LeftSideBar";
 import RightSideBar from "../components/RightSideBar/RightSideBar";
-import InboxMails from "../components/MailsPage";
 import { Outlet } from "react-router-dom";
 
 import { Box } from "@mui/material";
 import InboxEmailLoader from "../components/Common/InboxEmailLoader";
-
+const MailsPage = lazy(() => import("../components/MailsPage.jsx"));
 const Dashboard = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [openMsgBox, setOpenMsgBox] = useState(false);
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
   };
@@ -17,13 +17,15 @@ const Dashboard = () => {
     <>
       <NavBar toggleDrawer={toggleDrawer} />
 
-      <LeftSideBar openDrawer={openDrawer} />
+      <LeftSideBar
+        openDrawer={openDrawer}
+        setOpenMsgBox={setOpenMsgBox}
+        openMsgBox={openMsgBox}
+      />
       <RightSideBar />
       <Suspense fallback={<InboxEmailLoader />}>
-        <Outlet context={{ openDrawer }} />
-        {/* <InboxMails openDrawer={openDrawer} /> */}
+        <Outlet context={{ openDrawer, setOpenMsgBox }} />
       </Suspense>
-      {/* <InboxMails openDrawer={openDrawer} /> */}
     </>
   );
 };

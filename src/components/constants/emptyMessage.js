@@ -25,4 +25,8 @@ export const EMPTY_TABS = {
     heading: "No snoozed Mails here!",
     subHeading: "Snooze some mail to see here",
   },
+  allmail: {
+    heading: "No mails",
+    subHeading: "All mails will be here",
+  },
 };
