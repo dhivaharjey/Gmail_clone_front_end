@@ -190,7 +190,7 @@ const Email = ({
             </Box>
           )}
 
-          <Date sx={{ marginLeft: "auto" }}>
+          <Date sx={{ marginLeft: "auto !important" }}>
             {new window.Date(email.date).getDate()}
             {new window.Date(email.date).toLocaleDateString("default", {
               month: "long",
