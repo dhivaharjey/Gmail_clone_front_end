@@ -52,7 +52,7 @@ const Indicator = styled(Typography)({
 });
 const Date = styled(Typography)({
   marginLeft: "auto !important",
-  paddingRight: "20px",
+  paddingRight: "25px",
   fontSize: "12px ",
   color: "#5F6368",
 });
@@ -174,9 +174,12 @@ const Email = ({
           </Typography>
 
           {type !== "trash" && show && (
-            <Box component="span" sx={{ marginLeft: "auto" }}>
+            <Box
+              component="span"
+              sx={{ marginLeft: "auto", paddingRight: "25px" }}
+            >
               <IconButton
-                sx={{ padding: "2px", margin: "0" }}
+                sx={{ padding: "2px", marginRight: "2px" }}
                 onClick={deleteSelectedEmails}
               >
                 <DeleteOutline fontSize="small" />
@@ -190,12 +193,14 @@ const Email = ({
             </Box>
           )}
 
-          <Date sx={{ marginLeft: "auto !important" }}>
-            {new window.Date(email.date).getDate()}
-            {new window.Date(email.date).toLocaleDateString("default", {
-              month: "long",
-            })}
-          </Date>
+          {!show && (
+            <Date sx={{ marginLeft: "auto !important" }}>
+              {new window.Date(email.date).getDate()}
+              {new window.Date(email.date).toLocaleDateString("default", {
+                month: "long",
+              })}
+            </Date>
+          )}
         </Box>
       </Wrapper>
     </>
