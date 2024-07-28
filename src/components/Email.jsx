@@ -19,7 +19,6 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { routes } from "../routers/routes";
-import ViewEmail from "./ViewEmail";
 import useApi from "../hooks/useApi";
 import { API_URLS } from "../services/api.urls";
 const Wrapper = styled(Box)({
@@ -52,7 +51,7 @@ const Indicator = styled(Typography)({
   marginRight: "6px",
 });
 const Date = styled(Typography)({
-  marginLeft: "auto",
+  marginLeft: "auto !important",
   paddingRight: "20px",
   fontSize: "12px ",
   color: "#5F6368",
