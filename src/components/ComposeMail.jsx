@@ -136,6 +136,8 @@ const ComposeMail = ({ openMsgBox, setOpenMsgBox }) => {
       image: "",
       name: "Code for interview",
       starred: false,
+      snooze: false,
+      trash: false,
       type: "drafts",
     };
     saveDraftService.call(payload);
@@ -180,15 +182,15 @@ const ComposeMail = ({ openMsgBox, setOpenMsgBox }) => {
     // }
     emailjs
       .send(
-        "service_xrhrsrp",
-        "template_ru3crqo",
+        process.env.REACT_APP_SERVICE_ID,
+        process.env.REACT_APP_TEMPLATE_ID,
         {
           to: data.to,
           from_name: "updatenewversion07@gmail.com",
           subject: data.subject,
           message: data.body,
         },
-        "R-gMXpp7uprOB19r8" // Replace with your EmailJS user ID
+        process.env.REACT_APP_USER_ID
       )
       .then(
         (result) => {
@@ -211,6 +213,7 @@ const ComposeMail = ({ openMsgBox, setOpenMsgBox }) => {
       name: "Code for interview",
       starred: false,
       snooze: false,
+      trash: false,
       type: "sent",
     };
     sentEmailService.call(payload);

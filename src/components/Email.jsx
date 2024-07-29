@@ -75,6 +75,10 @@ const Email = ({
   // const deleteEmailService = useApi(API_URLS.deleteEmailPermanently);
   const toggleStarredMail = () => {
     toggleStarredService.call({ id: email._id, value: !email.starred });
+    // setRefreshScreen((prevState) => !prevState);
+    setTimeout(() => {
+      setRefreshScreen((prevState) => !prevState);
+    }, 500);
   };
   const toggleSnoozedEmail = (e) => {
     e.stopPropagation();
@@ -88,19 +92,19 @@ const Email = ({
       setSelectedEmails((prevState) =>
         prevState.filter((id) => id != email._id)
       );
-      setChecked(false);
+      setChecked((prevState) => !prevState);
     } else {
       setSelectedEmails((prevState) => [...prevState, email._id]);
-      setChecked(true);
+      setChecked((prevState) => !prevState);
     }
   };
   const deleteSelectedEmails = (e) => {
     e.stopPropagation();
     moveEmailsToTrashService.call([email._id]);
-    setTimeout(() => {
-      setRefreshScreen((prevState) => !prevState);
-    }, 500);
-    setChecked(false);
+
+    setRefreshScreen((prevState) => !prevState);
+
+    setChecked((prevState) => !prevState);
   };
   return (
     <>
