@@ -4,7 +4,12 @@ import { Drawer } from "@mui/material";
 import LeftSideBarClosed from "./LeftSideBarClosed";
 import LeftSideBarOpen from "./LeftSideBarOpen";
 import ComposeMail from "../ComposeMail";
-const LeftSideBar = ({ openDrawer, openMsgBox, setOpenMsgBox }) => {
+const LeftSideBar = ({
+  openDrawer,
+  openMsgBox,
+  setOpenMsgBox,
+  setRefreshScreen,
+}) => {
   // const [openMsgBox, setOpenMsgBox] = useState(false);
   return (
     <>
@@ -51,7 +56,11 @@ const LeftSideBar = ({ openDrawer, openMsgBox, setOpenMsgBox }) => {
           <LeftSideBarClosed setOpenMsgBox={setOpenMsgBox} />
         </Drawer>
       )}
-      <ComposeMail openMsgBox={openMsgBox} setOpenMsgBox={setOpenMsgBox} />
+      <ComposeMail
+        openMsgBox={openMsgBox}
+        setOpenMsgBox={setOpenMsgBox}
+        setRefreshScreen={setRefreshScreen}
+      />
     </>
   );
 };

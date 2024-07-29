@@ -8,6 +8,8 @@ import { Box } from "@mui/material";
 import InboxEmailLoader from "../components/Common/InboxEmailLoader";
 const MailsPage = lazy(() => import("../components/MailsPage.jsx"));
 const Dashboard = () => {
+  const [refreshScreen, setRefreshScreen] = useState(false);
+
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const toggleDrawer = () => {
@@ -21,10 +23,18 @@ const Dashboard = () => {
         openDrawer={openDrawer}
         setOpenMsgBox={setOpenMsgBox}
         openMsgBox={openMsgBox}
+        setRefreshScreen={setRefreshScreen}
       />
       <RightSideBar />
       <Suspense fallback={<InboxEmailLoader />}>
-        <Outlet context={{ openDrawer, setOpenMsgBox }} />
+        <Outlet
+          context={{
+            openDrawer,
+            setOpenMsgBox,
+            refreshScreen,
+            setRefreshScreen,
+          }}
+        />
       </Suspense>
     </>
   );

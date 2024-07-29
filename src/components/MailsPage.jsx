@@ -23,8 +23,8 @@ const EmailContent = lazy(() => import("./Email"));
 const MailsPage = () => {
   const [checked, setChecked] = useState(false);
   const [selectedEmails, setSelectedEmails] = useState([]);
-  const [refreshScreen, setRefreshScreen] = useState(false);
-  const { openDrawer, setOpenMsgBox } = useOutletContext();
+  const { openDrawer, setOpenMsgBox, refreshScreen, setRefreshScreen } =
+    useOutletContext();
 
   const { type } = useParams();
   const getEmailService = useApi(API_URLS.getEmailFromType);

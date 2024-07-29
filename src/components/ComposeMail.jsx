@@ -113,8 +113,7 @@ const IconOptions = styled(IconButton)({
   padding: "0 6px",
 });
 
-const ComposeMail = ({ openMsgBox, setOpenMsgBox }) => {
-  const [refreshScreen, setRefreshScreen] = useState(false);
+const ComposeMail = ({ openMsgBox, setOpenMsgBox, setRefreshScreen }) => {
   const [isRecipientFocused, setRecipientFocused] = useState(false);
   const [data, setData] = useState({});
   const theme = useTheme();
@@ -149,7 +148,7 @@ const ComposeMail = ({ openMsgBox, setOpenMsgBox }) => {
     setOpenMsgBox(false);
 
     setExitFullScreen(isSmallScreen);
-    setRefreshScreen(true);
+    setRefreshScreen((prevState) => !prevState);
   };
 
   const handleFileUpload = async (event) => {
@@ -224,13 +223,12 @@ const ComposeMail = ({ openMsgBox, setOpenMsgBox }) => {
     }
     setOpenMsgBox(false);
     setExitFullScreen(isSmallScreen);
-    setRefreshScreen(true);
+    setRefreshScreen((prevState) => !prevState);
   };
 
   useEffect(() => {
     setExitFullScreen(isSmallScreen);
-    setRefreshScreen(true);
-  }, [isSmallScreen, refreshScreen]);
+  }, [isSmallScreen]);
   return (
     <Dialog
       open={openMsgBox}
