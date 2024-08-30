@@ -79,7 +79,6 @@ const UserLogin = () => {
       }
     },
   });
-  console.log(process.env.REACT_APP_BACK_END_URL);
   useEffect(() => {
     const hasLoggedOut = localStorage.getItem("hasLoggedOut");
     if (hasLoggedOut) {
