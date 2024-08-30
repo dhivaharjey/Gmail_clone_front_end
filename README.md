@@ -1,15 +1,15 @@
 # Gmail_Clone
 
-<video controls src="public/Working.mp4" title="Working"></video>
-<video controls src="public/profile.mp4" title="Profile Image video"></video>
-<video controls src="public/automatic-log-out.mp4" title="Automatically log out when the token is expired">
-</video>
-https://github.com/user-attachments/assets/44422616-edf0-4c53-b432-ffb92b1122dd
+
+
+### WORKING VIDEO 
 [Working Video](https://github.com/user-attachments/assets/500cf568-64f8-42a0-8fd7-d796044108fd)
-<!-- [Title](public/Recording%202024-07-24%20232424.mp4) -->
-
-<!-- ![Alternate Text](public/Recording 2024-07-24 232424.mp4) -->
-
+---
+### PROFILE UPLOAD
+[profile Upload](https://github.com/user-attachments/assets/44422616-edf0-4c53-b432-ffb92b1122dd)
+---
+### AUTOMATIC LOGOUT (token expires)
+[Automatic log out](https://github.com/user-attachments/assets/ec65eec1-633c-47f4-99fd-64aae20b3459)
 ## React + Vite
 
 - Step 1: Create a new Vite project
