@@ -3,10 +3,10 @@
 
 
 ### WORKING VIDEO 
-[Working Video](https://github.com/user-attachments/assets/500cf568-64f8-42a0-8fd7-d796044108fd)
+[Working Video](https://github.com/user-attachments/assets/2e19fd87-fa4a-4f19-ad17-a300074e8459)
 ---
 ### PROFILE UPLOAD
-[profile Upload](https://github.com/user-attachments/assets/44422616-edf0-4c53-b432-ffb92b1122dd)
+[profile Upload](https://github.com/user-attachments/assets/0dad5849-d977-45d9-9de0-281c744a7cae)
 ---
 ### AUTOMATIC LOGOUT (token expires)
 [Automatic log out](https://github.com/user-attachments/assets/ec65eec1-633c-47f4-99fd-64aae20b3459)
