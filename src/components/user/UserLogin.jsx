@@ -40,7 +40,7 @@ const UserLogin = () => {
       setSubmitting(true);
       try {
         const res = await axios.post(
-          `https://gmail-clone-backend-1u9e.onrender.com/user/login`,
+          `${process.env.REACT_APP_BACK_END_URL}/user/login`,
           values
         );
 
@@ -79,6 +79,7 @@ const UserLogin = () => {
       }
     },
   });
+  console.log(process.env.REACT_APP_BACK_END_URL);
   useEffect(() => {
     const hasLoggedOut = localStorage.getItem("hasLoggedOut");
     if (hasLoggedOut) {
